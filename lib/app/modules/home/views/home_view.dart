@@ -37,6 +37,30 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
+  Widget buildHeader(String name) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              Icon(Icons.person),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                "Halo, $name",
+                style: TextStyle(fontSize: 24),
+              )
+            ],
+          ),
+          IconButton(onPressed: () {}, icon: Icon(Icons.info_outline))
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -47,27 +71,7 @@ class HomeView extends GetView<HomeController> {
         body: SafeArea(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.person),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          "Halo, Slamet",
-                          style: TextStyle(fontSize: 24),
-                        )
-                      ],
-                    ),
-                    IconButton(onPressed: () {}, icon: Icon(Icons.info_outline))
-                  ],
-                ),
-              ),
+              buildHeader("Slamet"),
               SizedBox(
                 height: 10,
               ),

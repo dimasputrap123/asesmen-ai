@@ -6,8 +6,9 @@ import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
   LoginView({super.key});
-  final loginController = Get.put(LoginController());
   final _formKey = GlobalKey<FormState>();
+  final usernameController = TextEditingController();
+  final passController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +41,7 @@ class LoginView extends GetView<LoginController> {
                 child: Column(
                   children: [
                     TextFormField(
+                      controller: usernameController,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                             borderSide: BorderSide(),
@@ -61,11 +63,12 @@ class LoginView extends GetView<LoginController> {
                       height: 15,
                     ),
                     Obx(() => TextFormField(
-                        obscureText: loginController.obscure.value,
+                        controller: passController,
+                        obscureText: controller.obscure.value,
                         decoration: InputDecoration(
                           suffixIcon: TextButton(
-                              onPressed: loginController.obscureToggle,
-                              child: Text(loginController.obscure.value
+                              onPressed: controller.obscureToggle,
+                              child: Text(controller.obscure.value
                                   ? "show"
                                   : 'hide')),
                           border: OutlineInputBorder(
@@ -89,6 +92,10 @@ class LoginView extends GetView<LoginController> {
                     ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
+                          var username = usernameController.text;
+                          var pass = passController.text;
+                          print(username);
+                          print(pass);
                           Get.toNamed('/home');
                         }
                       },

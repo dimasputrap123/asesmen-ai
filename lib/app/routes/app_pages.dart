@@ -6,6 +6,8 @@ import '../modules/listdata/bindings/listdata_binding.dart';
 import '../modules/listdata/views/listdata_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/survey/bindings/survey_binding.dart';
+import '../modules/survey/views/survey_view.dart';
 
 part 'app_routes.dart';
 
@@ -29,6 +31,11 @@ class AppPages {
       name: _Paths.LISTDATA,
       page: () => const ListdataView(),
       binding: ListdataBinding(),
+    ),
+    GetPage(
+      name: _Paths.SURVEY,
+      page: () => SurveyView(),
+      binding: SurveyBinding(),
     ),
   ];
 }
