@@ -32,9 +32,21 @@ class OptionitemView extends StatelessWidget {
             width: 2,
           ),
         ),
-        child: Text(
-          label,
-          style: TextStyle(color: isSelected ? selectedText : Colors.black),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              label,
+              style: TextStyle(color: isSelected ? selectedText : Colors.black),
+            ),
+            isSelected
+                ? Icon(
+                    Icons.check_circle_outline,
+                    color: selectedText,
+                    size: 20,
+                  )
+                : SizedBox()
+          ],
         ),
       ),
     );
