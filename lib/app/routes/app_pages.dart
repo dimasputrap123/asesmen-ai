@@ -1,3 +1,4 @@
+import 'package:assesment/middleware/auth_middleware.dart';
 import 'package:get/get.dart';
 
 import '../modules/home/bindings/home_binding.dart';
@@ -15,27 +16,28 @@ class AppPages {
   AppPages._();
 
   static const INITIAL = Routes.LOGIN;
+  static const HOME = Routes.HOME;
 
   static final routes = [
     GetPage(
-      name: _Paths.HOME,
-      page: () => const HomeView(),
-      binding: HomeBinding(),
-    ),
+        name: _Paths.HOME,
+        page: () => const HomeView(),
+        binding: HomeBinding(),
+        middlewares: [AuthMiddleware()]),
     GetPage(
       name: _Paths.LOGIN,
       page: () => LoginView(),
       binding: LoginBinding(),
     ),
     GetPage(
-      name: _Paths.LISTDATA,
-      page: () => const ListdataView(),
-      binding: ListdataBinding(),
-    ),
+        name: _Paths.LISTDATA,
+        page: () => const ListdataView(),
+        binding: ListdataBinding(),
+        middlewares: [AuthMiddleware()]),
     GetPage(
-      name: _Paths.SURVEY,
-      page: () => SurveyView(),
-      binding: SurveyBinding(),
-    ),
+        name: _Paths.SURVEY,
+        page: () => SurveyView(),
+        binding: SurveyBinding(),
+        middlewares: [AuthMiddleware()]),
   ];
 }

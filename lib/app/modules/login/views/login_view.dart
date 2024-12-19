@@ -68,9 +68,8 @@ class LoginView extends GetView<LoginController> {
                         decoration: InputDecoration(
                           suffixIcon: TextButton(
                               onPressed: controller.obscureToggle,
-                              child: Text(controller.obscure.value
-                                  ? "show"
-                                  : 'hide')),
+                              child: Text(
+                                  controller.obscure.value ? "show" : 'hide')),
                           border: OutlineInputBorder(
                               borderSide: BorderSide(),
                               borderRadius: BorderRadius.circular(30)),
@@ -89,32 +88,54 @@ class LoginView extends GetView<LoginController> {
                     SizedBox(
                       height: 25,
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          var username = usernameController.text;
-                          var pass = passController.text;
-                          print(username);
-                          print(pass);
-                          Get.toNamed('/home');
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                          minimumSize: Size(double.infinity, 50),
-                          elevation: 0,
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                          backgroundColor: Color(0xFF1bae9f),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(25))),
-                      child: Text(
-                        "Login",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    )
+                    Obx(() => ElevatedButton(
+                          onPressed: controller.isLoading.value
+                              ? null
+                              : () async {
+                                  if (_formKey.currentState!.validate()) {
+                                    var username = usernameController.text;
+                                    var pass = passController.text;
+                                    var result =
+                                        await controller.login(username, pass);
+                                    if (result) {
+                                      Get.toNamed('/home');
+                                    }
+                                  }
+                                },
+                          style: ElevatedButton.styleFrom(
+                              minimumSize: Size(double.infinity, 50),
+                              elevation: 0,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 5, vertical: 10),
+                              backgroundColor: controller.isLoading.value
+                                  ? Colors.grey.shade400
+                                  : Color(0xFF1bae9f),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25))),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              controller.isLoading.value
+                                  ? Container(
+                                      margin: EdgeInsets.only(right: 5),
+                                      child: Transform.scale(
+                                        scale: 0.2,
+                                        child: CircularProgressIndicator(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    )
+                                  : SizedBox(),
+                              Text(
+                                "Login",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        ))
                   ],
                 ),
               ),

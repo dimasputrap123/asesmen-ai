@@ -3,11 +3,25 @@ import 'package:assesment/app/modules/home/views/tab_dashboard_view.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
+
+  void onPressLogout() {
+    Get.defaultDialog(
+        title: 'Konfirmasi',
+        middleText: 'Apakah anda yakin?',
+        textConfirm: "Ya",
+        textCancel: "Kembali",
+        onConfirm: () {
+          var box = GetStorage();
+          box.remove('token');
+          Get.offAllNamed("/login");
+        });
+  }
 
   AppBar buildAppBar() {
     return AppBar(
@@ -20,7 +34,7 @@ class HomeView extends GetView<HomeController> {
       ),
       actions: [
         TextButton(
-            onPressed: () {},
+            onPressed: onPressLogout,
             child: Row(
               children: [
                 Icon(
