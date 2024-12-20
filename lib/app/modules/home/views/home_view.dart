@@ -63,10 +63,10 @@ class HomeView extends GetView<HomeController> {
               SizedBox(
                 width: 5,
               ),
-              Text(
-                "Halo, $name",
-                style: TextStyle(fontSize: 24),
-              )
+              Obx(() => Text(
+                    "Halo, ${controller.profile.value.name ?? "-"}",
+                    style: TextStyle(fontSize: 24),
+                  ))
             ],
           ),
           IconButton(onPressed: () {}, icon: Icon(Icons.info_outline))
@@ -95,7 +95,9 @@ class HomeView extends GetView<HomeController> {
               ),
               Expanded(
                   child: TabBarView(children: [
-                TabDashboardView(),
+                Obx(() => TabDashboardView(
+                      rekapData: controller.rekap.value,
+                    )),
                 Container(
                   color: Colors.white,
                   child: Center(
