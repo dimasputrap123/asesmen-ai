@@ -8,16 +8,20 @@ class OptionItem {
 }
 
 class FormMultipleOptionView extends StatefulWidget {
+  final int id;
   final String question;
   final List<OptionItem> options;
   const FormMultipleOptionView(
-      {super.key, required this.question, required this.options});
+      {super.key,
+      required this.id,
+      required this.question,
+      required this.options});
 
   @override
-  State<FormMultipleOptionView> createState() => _FormMultipleOptionViewState();
+  State<FormMultipleOptionView> createState() => FormMultipleOptionViewState();
 }
 
-class _FormMultipleOptionViewState extends State<FormMultipleOptionView> {
+class FormMultipleOptionViewState extends State<FormMultipleOptionView> {
   var _currentOption = -1;
   @override
   Widget build(BuildContext context) {

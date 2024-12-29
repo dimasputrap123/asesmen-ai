@@ -2,22 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AsesmenItem {
+  final int id;
   final String nik;
   final String nama;
   final String alamat;
 
   const AsesmenItem(
-      {required this.nik, required this.nama, required this.alamat});
+      {required this.id,
+      required this.nik,
+      required this.nama,
+      required this.alamat});
 }
 
 class ListcardView extends GetView {
   final AsesmenItem item;
-  final VoidCallback? onTap;
+  final Function(int)? onTap;
   const ListcardView({super.key, required this.item, this.onTap});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: () {
+        onTap!(item.id);
+      },
       child: Container(
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
@@ -34,23 +40,25 @@ class ListcardView extends GetView {
             SizedBox(
               width: 20,
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  item.nik,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  item.nama,
-                  style: TextStyle(fontSize: 16),
-                ),
-                Text(
-                  item.alamat,
-                  style:
-                      TextStyle(fontSize: 16, overflow: TextOverflow.ellipsis),
-                ),
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    item.nik,
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    item.nama,
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  Text(
+                    item.alamat,
+                    softWrap: true,
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ],
+              ),
             )
           ],
         ),
