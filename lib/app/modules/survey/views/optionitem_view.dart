@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 
 class OptionitemView extends StatelessWidget {
   final String label;
-  final int id;
-  final int currentId;
-  final Function(int) onTap;
+  final String id;
+  final String currentId;
+  final Function(String, String) onTap;
   const OptionitemView(
       {super.key,
       required this.label,
@@ -19,7 +19,7 @@ class OptionitemView extends StatelessWidget {
     var isSelected = currentId == id;
     return GestureDetector(
       onTap: () {
-        onTap(id);
+        onTap(id, label);
       },
       child: Container(
         margin: EdgeInsets.only(bottom: 20),

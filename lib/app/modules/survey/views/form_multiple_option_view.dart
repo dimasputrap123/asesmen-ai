@@ -2,7 +2,7 @@ import 'package:assesment/app/modules/survey/views/optionitem_view.dart';
 import 'package:flutter/material.dart';
 
 class OptionItem {
-  final int id;
+  final String id;
   final String label;
   OptionItem({required this.id, required this.label});
 }
@@ -22,7 +22,12 @@ class FormMultipleOptionView extends StatefulWidget {
 }
 
 class FormMultipleOptionViewState extends State<FormMultipleOptionView> {
-  var _currentOption = -1;
+  var _currentOption = "-1";
+
+  Map<String, dynamic> getInputValue() {
+    return {'id': widget.id, 'value': _currentOption};
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -44,7 +49,7 @@ class FormMultipleOptionViewState extends State<FormMultipleOptionView> {
                   label: item.label,
                   currentId: _currentOption,
                   id: item.id,
-                  onTap: (int id) {
+                  onTap: (String id, String label) {
                     setState(() {
                       _currentOption = id;
                     });

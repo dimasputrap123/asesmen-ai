@@ -13,11 +13,6 @@ class FormInputViewState extends State<FormInputView> {
   final _formKey = GlobalKey<FormState>();
   final inputController = TextEditingController();
 
-  void performAction() {
-    // Define your custom logic here
-    print("Child function executed!");
-  }
-
   Map<String, dynamic> getInputValue() {
     return {'id': widget.id, 'value': inputController.text};
   }

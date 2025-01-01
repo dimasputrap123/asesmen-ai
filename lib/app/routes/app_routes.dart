@@ -7,6 +7,7 @@ abstract class Routes {
   static const LOGIN = _Paths.LOGIN;
   static const LISTDATA = _Paths.LISTDATA;
   static const SURVEY = _Paths.SURVEY;
+  static const RESULT = _Paths.RESULT;
 }
 
 abstract class _Paths {
@@ -15,4 +16,5 @@ abstract class _Paths {
   static const LOGIN = '/login';
   static const LISTDATA = '/listdata';
   static const SURVEY = '/survey';
+  static const RESULT = '/result';
 }

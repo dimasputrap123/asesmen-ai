@@ -5,6 +5,10 @@ class SurveyJawaban {
   String jawaban;
 
   SurveyJawaban({required this.id, required this.jawaban});
+
+  Map<String, dynamic> toJson() {
+    return {'id_pertanyaan': id, 'jawaban': jawaban};
+  }
 }
 
 class SurveyController extends GetxController {
@@ -17,6 +21,8 @@ class SurveyController extends GetxController {
     int index = listSurveyJawaban.indexWhere((e) => e.id == id);
     if (index == -1) {
       listSurveyJawaban.add(SurveyJawaban(id: id, jawaban: jawaban));
+    } else {
+      listSurveyJawaban[index].jawaban = jawaban;
     }
   }
 
