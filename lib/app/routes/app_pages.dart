@@ -9,6 +9,8 @@ import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/result/bindings/result_binding.dart';
 import '../modules/result/views/result_view.dart';
+import '../modules/save_result/bindings/save_result_binding.dart';
+import '../modules/save_result/views/save_result_view.dart';
 import '../modules/survey/bindings/survey_binding.dart';
 import '../modules/survey/views/survey_view.dart';
 
@@ -45,6 +47,11 @@ class AppPages {
       name: _Paths.RESULT,
       page: () => const ResultView(),
       binding: ResultBinding(),
+    ),
+    GetPage(
+      name: _Paths.SAVE_RESULT,
+      page: () => const SaveResultView(),
+      binding: SaveResultBinding(),
     ),
   ];
 }

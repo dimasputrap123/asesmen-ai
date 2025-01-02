@@ -7,9 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ResultController extends GetxController {
-  var isLoading = false.obs;
-  var rekomendasi = "".obs;
-  var kategori = "".obs;
+  final isLoading = false.obs;
+  final isLoadingSave = true.obs;
+  final isSaveSuccess = false.obs;
+  final rekomendasi = "".obs;
+  final kategori = "".obs;
 
   @override
   void onInit() {
@@ -32,6 +34,39 @@ class ResultController extends GetxController {
       kategori.value = body['data']['kategori'];
     } on dio.DioException catch (e) {
       isLoading.value = false;
+      Get.snackbar("Alert", e.response?.data['message'] ?? "internal error",
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 2),
+          colorText: Colors.white,
+          backgroundColor: Colors.redAccent);
+    }
+  }
+
+  Future<void> saveSurvey(int idKpm, String catatan) async {
+    final surveyController = Get.find<SurveyController>();
+    String jsonData = jsonEncode(
+        surveyController.listSurveyJawaban.map((e) => e.toJson()).toList());
+    try {
+      isLoadingSave.value = true;
+      final formData = dio.FormData.fromMap({
+        'id_kpm': idKpm,
+        'kategori_pred': kategori.value,
+        'kategori_man': kategori.value,
+        'rekomendasi_pred': rekomendasi.value,
+        'rekomendasi_man': rekomendasi.value,
+        'catatan': catatan,
+        'surveys': jsonData
+      });
+      final response = await DioClient().dio.request("/tambahSurvey",
+          options: dio.Options(method: 'POST'), data: formData);
+      final body = response.data;
+      if (body['status']) {
+        isSaveSuccess.value = true;
+      }
+      isLoadingSave.value = false;
+    } on dio.DioException catch (e) {
+      isSaveSuccess.value = false;
+      isLoadingSave.value = false;
       Get.snackbar("Alert", e.response?.data['message'] ?? "internal error",
           snackPosition: SnackPosition.TOP,
           duration: const Duration(seconds: 2),

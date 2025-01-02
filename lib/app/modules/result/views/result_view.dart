@@ -130,19 +130,42 @@ class ResultView extends GetView<ResultController> {
                           ),
                           Expanded(
                             child: ElevatedButton(
-                                onPressed: () {},
-                                style: ElevatedButton.styleFrom(
-                                    backgroundColor: filledButton,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10))),
-                                child: Text(
-                                  "Simpan",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600),
-                                )),
+                              onPressed: controller.isLoadingSave.value
+                                  ? null
+                                  : () async {},
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: Size(double.infinity, 50),
+                                elevation: 0,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 5, vertical: 10),
+                                backgroundColor: controller.isLoadingSave.value
+                                    ? Colors.grey.shade400
+                                    : Color(0xFF1bae9f),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  controller.isLoading.value
+                                      ? Container(
+                                          margin: EdgeInsets.only(right: 5),
+                                          child: Transform.scale(
+                                            scale: 0.2,
+                                            child: CircularProgressIndicator(
+                                              color: Colors.green,
+                                            ),
+                                          ),
+                                        )
+                                      : SizedBox(),
+                                  Text(
+                                    "Simpan",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                            ),
                           )
                         ],
                       )

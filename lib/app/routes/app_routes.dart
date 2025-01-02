@@ -8,6 +8,7 @@ abstract class Routes {
   static const LISTDATA = _Paths.LISTDATA;
   static const SURVEY = _Paths.SURVEY;
   static const RESULT = _Paths.RESULT;
+  static const SAVE_RESULT = _Paths.SAVE_RESULT;
 }
 
 abstract class _Paths {
@@ -17,4 +18,5 @@ abstract class _Paths {
   static const LISTDATA = '/listdata';
   static const SURVEY = '/survey';
   static const RESULT = '/result';
+  static const SAVE_RESULT = '/save-result';
 }
