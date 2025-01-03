@@ -34,7 +34,9 @@ class SaveResultView extends GetView<SaveResultController> {
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
               child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.offAllNamed('/home');
+                  },
                   style: ElevatedButton.styleFrom(
                     minimumSize: Size(double.infinity, 50),
                     elevation: 0,

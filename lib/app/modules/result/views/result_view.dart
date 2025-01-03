@@ -50,11 +50,11 @@ class ResultView extends GetView<ResultController> {
                               height: 10,
                             ),
                             Text(
-                              "Kategori Asesmen : ${controller.kategori.value}",
+                              "Kategori Asesmen : ${controller.kategori.value.text}",
                               style: TextStyle(fontSize: 18),
                             ),
                             Text(
-                              "Rekomendasi Bantuan : ${controller.rekomendasi.value}",
+                              "Rekomendasi Bantuan : ${controller.rekomendasi.value.text}",
                               style: TextStyle(fontSize: 18),
                             ),
                           ],
@@ -132,12 +132,17 @@ class ResultView extends GetView<ResultController> {
                             child: ElevatedButton(
                               onPressed: controller.isLoadingSave.value
                                   ? null
-                                  : () async {},
+                                  : () async {
+                                      int id = Get.arguments ?? 0;
+                                      final result = await controller
+                                          .saveSurvey(id, inputController.text);
+                                      if (result) {
+                                        Get.toNamed('/save-result');
+                                      }
+                                    },
                               style: ElevatedButton.styleFrom(
                                 minimumSize: Size(double.infinity, 50),
                                 elevation: 0,
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 5, vertical: 10),
                                 backgroundColor: controller.isLoadingSave.value
                                     ? Colors.grey.shade400
                                     : Color(0xFF1bae9f),

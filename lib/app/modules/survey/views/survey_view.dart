@@ -166,7 +166,8 @@ class SurveyView extends GetView<SurveyController> {
         curve: Curves.easeInOut,
       );
     } else {
-      Get.toNamed('/result');
+      int id = Get.arguments ?? 0;
+      Get.toNamed('/result', arguments: id);
     }
   }
 
@@ -185,7 +186,6 @@ class SurveyView extends GetView<SurveyController> {
 
   @override
   Widget build(BuildContext context) {
-    // int id = Get.arguments ?? 0;
     return Scaffold(
       appBar: AppBar(
         title: Obx(() => Text(

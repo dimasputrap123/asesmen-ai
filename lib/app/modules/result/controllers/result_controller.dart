@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:assesment/app/data/label_data.dart';
 import 'package:assesment/app/modules/survey/controllers/survey_controller.dart';
 import 'package:assesment/http/client.dart';
 import 'package:dio/dio.dart' as dio;
@@ -8,10 +9,10 @@ import 'package:get/get.dart';
 
 class ResultController extends GetxController {
   final isLoading = false.obs;
-  final isLoadingSave = true.obs;
+  final isLoadingSave = false.obs;
   final isSaveSuccess = false.obs;
-  final rekomendasi = "".obs;
-  final kategori = "".obs;
+  final rekomendasi = LabelData().obs;
+  final kategori = LabelData().obs;
 
   @override
   void onInit() {
@@ -30,8 +31,9 @@ class ResultController extends GetxController {
           options: dio.Options(method: 'POST'), data: formData);
       isLoading.value = false;
       final body = response.data;
-      rekomendasi.value = body['data']['rekomendasi_bantuan'];
-      kategori.value = body['data']['kategori'];
+      rekomendasi.value =
+          LabelData.fromJson(body['data']['rekomendasi_bantuan']);
+      kategori.value = LabelData.fromJson(body['data']['kategori']);
     } on dio.DioException catch (e) {
       isLoading.value = false;
       Get.snackbar("Alert", e.response?.data['message'] ?? "internal error",
@@ -42,7 +44,7 @@ class ResultController extends GetxController {
     }
   }
 
-  Future<void> saveSurvey(int idKpm, String catatan) async {
+  Future<bool> saveSurvey(int idKpm, String catatan) async {
     final surveyController = Get.find<SurveyController>();
     String jsonData = jsonEncode(
         surveyController.listSurveyJawaban.map((e) => e.toJson()).toList());
@@ -50,28 +52,35 @@ class ResultController extends GetxController {
       isLoadingSave.value = true;
       final formData = dio.FormData.fromMap({
         'id_kpm': idKpm,
-        'kategori_pred': kategori.value,
-        'kategori_man': kategori.value,
-        'rekomendasi_pred': rekomendasi.value,
-        'rekomendasi_man': rekomendasi.value,
+        'kategori_pred': kategori.value.id,
+        'kategori_man': kategori.value.id,
+        'rekomendasi_pred': rekomendasi.value.id,
+        'rekomendasi_man': rekomendasi.value.id,
         'catatan': catatan,
         'surveys': jsonData
       });
       final response = await DioClient().dio.request("/tambahSurvey",
           options: dio.Options(method: 'POST'), data: formData);
       final body = response.data;
-      if (body['status']) {
-        isSaveSuccess.value = true;
-      }
       isLoadingSave.value = false;
+      if (body['status']) {
+        return true;
+      } else {
+        Get.snackbar("Alert", body['message'] ?? "internal error",
+            snackPosition: SnackPosition.TOP,
+            duration: const Duration(seconds: 2),
+            colorText: Colors.white,
+            backgroundColor: Colors.redAccent);
+      }
+      return false;
     } on dio.DioException catch (e) {
-      isSaveSuccess.value = false;
       isLoadingSave.value = false;
       Get.snackbar("Alert", e.response?.data['message'] ?? "internal error",
           snackPosition: SnackPosition.TOP,
           duration: const Duration(seconds: 2),
           colorText: Colors.white,
           backgroundColor: Colors.redAccent);
+      return false;
     }
   }
 }
