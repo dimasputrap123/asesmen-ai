@@ -74,7 +74,7 @@ class ResultView extends GetView<ResultController> {
                               height: 10,
                             ),
                             Text(
-                              "Program Keluarga Harapan (PKH) merupakan bantuan sosial yang diberikan kepada keluarga miskin untuk  meningkatkan kesejahteraan",
+                              controller.deskripsi.value,
                               style: TextStyle(fontSize: 18),
                             )
                           ],

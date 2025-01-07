@@ -13,6 +13,7 @@ class ResultController extends GetxController {
   final isSaveSuccess = false.obs;
   final rekomendasi = LabelData().obs;
   final kategori = LabelData().obs;
+  final deskripsi = "".obs;
 
   @override
   void onInit() {
@@ -34,6 +35,7 @@ class ResultController extends GetxController {
       rekomendasi.value =
           LabelData.fromJson(body['data']['rekomendasi_bantuan']);
       kategori.value = LabelData.fromJson(body['data']['kategori']);
+      deskripsi.value = body['data']['deskripsi'];
     } on dio.DioException catch (e) {
       isLoading.value = false;
       Get.snackbar("Alert", e.response?.data['message'] ?? "internal error",
